@@ -23,8 +23,7 @@ export default () => {
 	const [secret, setSecret] = useState('');
 	const [apps, setApps] = useState([]);
 
-	const options = useMemo(() => apps.map(({ name, secret }) => <option value={secret}>{name}</option>), [apps])
-
+	// onChange Listeners
 	const handleUserIDChange = useCallback(({ target: { value } }) => {
 		setUserID(value);
 	}, []);
@@ -33,11 +32,19 @@ export default () => {
 		setSecret(value);
 	}, []);
 
+	// Get Query Params
+	// *only runs on first render*
 	useEffect(() => {
 		const params = queryString.parse(location.search);
-		setApps(Object.entries(params).map(([name, secret]) => ({ name, secret })));
+		const appList = Object.entries(params).reverse().map(([name, secret]) => ({ name, secret }));
+		setApps(appList);
+		setSecret(appList[0].secret)
 	}, []);
 
+	// Use the query params to generate memoized select options
+	const options = useMemo(() => apps ? apps.map(({ name, secret }) => <option value={secret}>{name}</option>) : [], [apps])
+
+	// Generate JWT on each change of the secret, or the userID
 	useEffect(() => {
 		const stringifiedHeader = UTF8.parse(JSON.stringify(header));
 		const header = base64url(stringifiedHeader);

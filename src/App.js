@@ -1,6 +1,8 @@
 import { Fragment, h } from 'preact';
 import useJWTGenerator from './useJWTGenerator';
 
+const renderJWT = (jwt, userID) => jwt && userID ? <pre id="jwt"><span>{jwt}</span></pre> : <p id="warning" class="show">Please enter a Stream User ID</p>;
+
 const App = () => {
 	const [jwt, { userID, secret, handleSecretChange, handleUserIDChange, options }] = useJWTGenerator();
 	return (
@@ -14,12 +16,7 @@ const App = () => {
 				</div>
 			</div>
 			<div class="container">
-				<pre id="jwt">
-					<span id="jwt_header"></span>
-					<span id="jwt_payload"></span>
-					<span id="jwt_signature"></span>
-				</pre>
-				<p id="warning" class="show">Please enter a Stream User ID</p>
+				{renderJWT(jwt, userID)}
 			</div>
 		</Fragment>
 	);
