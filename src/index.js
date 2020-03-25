@@ -1,13 +1,12 @@
-import React from "react";
-import ReactDOM from "react-dom";
+import { render, h } from 'preact';
 import './styles.scss';
+import App from './App';
 
-const App = () => {
-	return <div>Hello React,Webpack 4 & Babel 7!</div>;
-};
+let root;
+function init() {
+	root = render(<App />, document.querySelector("#stream_jwtform"));
+}
+init();
 
-// const renderJWTForm = (selector = '#root') => {
-// 	return ReactDOM.render(<App />, document.querySelector(selector));
-// }
-
-ReactDOM.render(<App />, document.querySelector("#root"));
+// example: Re-render on Webpack HMR update:
+if (module.hot) module.hot.accept('./App', init);

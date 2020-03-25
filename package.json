@@ -4,8 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "preact": "^10.3.4"
   },
   "scripts": {
     "start": "webpack-dev-server --open --hot --mode development",
@@ -14,9 +13,10 @@
   "devDependencies": {
     "@babel/core": "^7.9.0",
     "@babel/preset-env": "^7.9.0",
-    "@babel/preset-react": "^7.9.4",
     "babel-loader": "^8.1.0",
     "babel-minify-webpack-plugin": "^0.3.1",
+    "babel-plugin-transform-react-jsx": "^6.24.1",
+    "babel-preset-preact": "^2.0.0",
     "css-loader": "^3.4.2",
     "html-loader": "^1.0.0",
     "html-webpack-plugin": "^4.0.1",
