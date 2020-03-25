@@ -17,11 +17,10 @@ const base64url = (source) => {
 
 	return encodedSource;
 }
-export default () => {
+export default (container) => {
 	const [jwt, setJWT] = useState('');
-	const [userID, setUserID] = useState('')
-	const [secret, setSecret] = useState('');
-	const [apps, setApps] = useState([]);
+	const [userID, setUserID] = useState((container && container.dataset && container.dataset.secret != null) ? container.dataset.initialUserId : "User ID")
+	const [secret, setSecret] = useState((container && container.dataset && container.dataset.secret != null) ? container.dataset.secret : "Your Api Key");
 
 	// onChange Listeners
 	const handleUserIDChange = useCallback(({ target: { value } }) => {
@@ -31,18 +30,6 @@ export default () => {
 	const handleSecretChange = useCallback(({ target: { value } }) => {
 		setSecret(value);
 	}, []);
-
-	// Get Query Params
-	// *only runs on first render*
-	useEffect(() => {
-		const params = queryString.parse(location.search);
-		const appList = Object.entries(params).reverse().map(([name, secret]) => ({ name, secret }));
-		setApps(appList);
-		setSecret(appList[0].secret)
-	}, []);
-
-	// Use the query params to generate memoized select options
-	const options = useMemo(() => apps ? apps.map(({ name, secret }) => <option value={secret}>{name}</option>) : [], [apps])
 
 	// Generate JWT on each change of the secret, or the userID
 	useEffect(() => {
@@ -59,5 +46,5 @@ export default () => {
 		return setJWT(`${header}.${data}.${signature}`);
 	}, [secret, userID])
 
-	return [jwt, { userID, secret, options, handleUserIDChange, handleSecretChange }]
+	return [jwt, { userID, secret, handleUserIDChange, handleSecretChange }]
 };
