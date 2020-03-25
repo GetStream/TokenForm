@@ -8,15 +8,23 @@
 	font-family: 'Roboto Mono', monospace !important;
 }
 
+#stream_jwtform, #stream_jwtform * {
+	box-sizing: border-box;
+}
+
 #stream_jwtform .header {
   max-width: 640px;
   width: 100%;
   justify-content: center;
-  padding: 24px;
 }
-#stream_jwtform .header .inputs > * {
-  width: calc(50% - 32px);
+#stream_jwtform .header .inputs input:first-of-type {
+	margin-right: 7.5px;
 }
+#stream_jwtform .header .inputs input:last-of-type {
+	margin-left: 7.5px;
+}
+
+
 
 #stream_jwtform .header .inputs {
   flex: 1;
@@ -26,20 +34,26 @@
   justify-content: space-between;
 }
 
+#stream_jwtform .header .inputs > * { 
+	flex: 1
+}
+
+
 #stream_jwtform .container {
+	margin: 15px;
 	display: flex;
 	flex: 1;
 	max-width: 640px;
 	width: 100%;
 	justify-content: center;
 	align-items: center;
-	padding: 0px 24px !important;
 }
 
 #stream_jwtform pre {
-	background-color: #f9f9f9;
+	background-color: transparent;
 	border: 1px solid #eeeeee;
-	border-radius: 8px;
+	border-bottom: transparent; 
+	box-shadow: 0 3px 0 0 #006CFF;
 	white-space: normal;
 	padding: 24px;
 	font-size: 24px;
@@ -47,11 +61,16 @@
 	letter-spacing: .5px;
 	line-height: 40px;
 	font-family: 'Roboto Mono', monospace;
+	margin: 0;
 }
 
 #stream_jwtform pre > span {
 	word-break: break-all;
 }
+
+#stream_jwtform pre > span:nth-of-type(1) {color: #F50057;}
+#stream_jwtform pre > span:nth-of-type(2) {color: #6200EA;}
+#stream_jwtform pre > span:nth-of-type(3) {color: #006CFF;}
 
 #stream_jwtform input  {
 	font-family: 'Roboto Mono', monospace;
@@ -60,9 +79,12 @@
 	font-size: 16px;
     padding: 16px;
 	border: 0;
-	background-color: #f9f9f9;
 	border: 1px solid #eeeeee;
-	border-radius: 8px;
+}
+#stream_jwtform input:focus {
+	background-color: #f9f9f9;
+	box-shadow: inset 0 -3px 0 0 #006CFF;
+
 }
 
 #stream_jwtform select {
@@ -93,11 +115,4 @@
 	font-size: 16px;
 	letter-spacing: 1px;
 	font-family: monospace;
-}
-
-#stream_jwtform .header {
-	display: flex;
-	flex-direction: row;
-	justify-content: center;
-	align-items: center;
 }
