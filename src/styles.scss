@@ -12,7 +12,7 @@
   max-width: 640px;
   width: 100%;
   justify-content: center;
-  padding: 40px 0px;
+  padding: 24px;
 }
 #stream_jwtform .header .inputs > * {
   width: calc(50% - 32px);
@@ -33,6 +33,7 @@
 	width: 100%;
 	justify-content: center;
 	align-items: center;
+	padding: 0px 24px !important;
 }
 
 #stream_jwtform pre {
