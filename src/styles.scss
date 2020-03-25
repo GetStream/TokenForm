@@ -13,7 +13,6 @@
 }
 
 #stream_jwtform .header {
-  max-width: 640px;
   width: 100%;
   justify-content: center;
 }
@@ -23,8 +22,6 @@
 #stream_jwtform .header .inputs input:last-of-type {
 	margin-left: 7.5px;
 }
-
-
 
 #stream_jwtform .header .inputs {
   flex: 1;
@@ -38,15 +35,14 @@
 	flex: 1
 }
 
-
 #stream_jwtform .container {
 	margin: 15px;
 	display: flex;
 	flex: 1;
-	max-width: 640px;
 	width: 100%;
 	justify-content: center;
 	align-items: center;
+	padding: 0;
 }
 
 #stream_jwtform pre {

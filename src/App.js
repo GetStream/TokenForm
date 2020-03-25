@@ -3,6 +3,7 @@ import useJWTGenerator from './useJWTGenerator';
 
 const renderJWT = (jwt, userID) => {
 	if (jwt && userID) {
+		console.log(jwt)
 		return (
 			<pre id="jwt">{jwt.split('.').map((item, i, a) => <span>{item}{i < a.length - 1  ? '.': ''}</span>)}</pre>
 		)
