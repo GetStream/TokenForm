@@ -19,7 +19,7 @@ const base64url = (source) => {
 }
 export default (container) => {
 	const [jwt, setJWT] = useState('');
-	const [userID, setUserID] = useState('')
+	const [userID, setUserID] = useState((container && container.dataset && container.dataset.secret != null) ? container.dataset.initialUserId : "User ID")
 	const [secret, setSecret] = useState((container && container.dataset && container.dataset.secret != null) ? container.dataset.secret : "Your Api Key");
 
 	// onChange Listeners
