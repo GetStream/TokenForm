@@ -4,7 +4,9 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "preact": "^10.3.4"
+    "crypto-js": "^4.0.0",
+    "preact": "^10.3.4",
+    "query-string": "^6.11.1"
   },
   "scripts": {
     "start": "webpack-dev-server --open --hot --mode development",
