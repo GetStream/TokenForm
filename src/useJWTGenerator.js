@@ -36,7 +36,6 @@ export default (container) => {
 		
 		const date = Math.floor(new Date().getTime() / 1000)
 		const newDate = date + value * 60;
-		console.log(newDate)
 		setExp({input: value, date: newDate})
 	}, [])
 
