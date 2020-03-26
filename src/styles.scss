@@ -115,6 +115,9 @@
 #stream_jwtform .footer {
 	width: 100%;
 }
+#stream_jwtform .footer:before {
+	display:none;
+}
 #stream_jwtform .footer .expiration {
 	display: flex;
 	align-items: center;
