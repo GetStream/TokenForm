@@ -52,9 +52,11 @@ export default (container) => {
 		}));
 		payload = base64UrlEncode(payload);
 
-		const signature = HMACSHA256(`${header}.${payload}`, secret);
+		const token = `${header}.${payload}`;
 
-		return setJWT(`${header}.${payload}.${base64UrlEncode(signature)}`);
+		const signature = HMACSHA256(token, secret);
+
+		return setJWT(`${token}.${base64UrlEncode(signature)}`);
 	}, [secret, userID, exp])
 
 	return [jwt, { userID, secret, exp, setExp, handleExpirationChange, handleUserIDChange, handleSecretChange }]
