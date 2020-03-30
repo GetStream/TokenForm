@@ -1,11 +1,9 @@
-import { h } from 'preact';
 import { useCallback, useEffect, useMemo, useState } from 'preact/hooks';
-import queryString from 'query-string';
 import Base64 from 'crypto-js/enc-base64';
 import UTF8 from 'crypto-js/enc-utf8';
-import HMACSHA256 from 'crypto-js/hmac-sha512';
+import HMACSHA256 from 'crypto-js/hmac-sha256';
 
-const base64url = (source) => {
+const base64UrlEncode = (source) => {
 	let encodedSource = Base64.stringify(source);
 
 	// Remove padding equal characters
@@ -17,9 +15,10 @@ const base64url = (source) => {
 
 	return encodedSource;
 }
+
 export default (container) => {
 	const [jwt, setJWT] = useState('');
-	const [userID, setUserID] = useState((container && container.dataset && container.dataset.secret != null) ? container.dataset.initialUserId : "User ID")
+	const [userID, setUserID] = useState((container && container.payloadset && container.dataset.secret != null) ? container.dataset.initialUserId : "User ID")
 	const [secret, setSecret] = useState((container && container.dataset && container.dataset.secret != null) ? container.dataset.secret : "Your Api Key");
 	const [exp, setExp] = useState({ input: 0, date: 0 });
 
@@ -41,20 +40,21 @@ export default (container) => {
 
 	// Generate JWT on each change of the secret, or the userID
 	useEffect(() => {
-		const stringifiedHeader = UTF8.parse(JSON.stringify({ alg: "HS256", typ: "JWT" }));
-		const header = base64url(stringifiedHeader);
+		let header = UTF8.parse(JSON.stringify({
+			"alg": "HS256",
+			"typ": "JWT"
+		}));
+		header = base64UrlEncode(header);
 
-		const stringifiedData = UTF8.parse(JSON.stringify({
+		let payload = UTF8.parse(JSON.stringify({
 			user_id: userID,
 			exp: exp.input !== 0 ? exp.date : undefined
 		}));
-		const data = base64url(stringifiedData);
+		payload = base64UrlEncode(payload);
 
-		let signature = header + "." + data;
-		signature = HMACSHA256(signature, secret);
-		signature = base64url(signature);
+		const signature = HMACSHA256(`${header}.${payload}`, secret);
 
-		return setJWT(`${header}.${data}.${signature}`);
+		return setJWT(`${header}.${payload}.${base64UrlEncode(signature)}`);
 	}, [secret, userID, exp])
 
 	return [jwt, { userID, secret, exp, setExp, handleExpirationChange, handleUserIDChange, handleSecretChange }]
