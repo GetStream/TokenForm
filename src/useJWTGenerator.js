@@ -21,6 +21,7 @@ export default (container) => {
 	const [jwt, setJWT] = useState('');
 	const [userID, setUserID] = useState((container && container.dataset && container.dataset.secret != null) ? container.dataset.initialUserId : "User ID")
 	const [secret, setSecret] = useState((container && container.dataset && container.dataset.secret != null) ? container.dataset.secret : "Your Api Key");
+	const [exp, setExp] = useState({input: 0, date: 0});
 
 	// onChange Listeners
 	const handleUserIDChange = useCallback(({ target: { value } }) => {
@@ -31,12 +32,22 @@ export default (container) => {
 		setSecret(value);
 	}, []);
 
+	const handleExpirationChange = useCallback(({target: {value}}) => {
+		
+		const date = Math.floor(new Date().getTime() / 1000)
+		const newDate = date + value * 60;
+		setExp({input: value, date: newDate})
+	}, [])
+
 	// Generate JWT on each change of the secret, or the userID
 	useEffect(() => {
 		const stringifiedHeader = UTF8.parse(JSON.stringify({ alg: "HS256", typ: "JWT" }));
 		const header = base64url(stringifiedHeader);
 
-		const stringifiedData = UTF8.parse(JSON.stringify({ user_id: userID }));
+		const stringifiedData = UTF8.parse(JSON.stringify({ 
+			user_id: userID, 
+			exp: exp.input !== 0 ? exp.date : undefined 
+		}));
 		const data = base64url(stringifiedData);
 
 		let signature = header + "." + data;
@@ -44,7 +55,7 @@ export default (container) => {
 		signature = base64url(signature);
 
 		return setJWT(`${header}.${data}.${signature}`);
-	}, [secret, userID])
+	}, [secret, userID, exp])
 
-	return [jwt, { userID, secret, handleUserIDChange, handleSecretChange }]
+	return [jwt, { userID, secret, exp, setExp, handleExpirationChange, handleUserIDChange, handleSecretChange }]
 };

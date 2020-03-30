@@ -4,18 +4,24 @@
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	padding: 0px 16px;
+	padding: 0px;
 	font-family: 'Roboto Mono', monospace !important;
 }
 
+#stream_jwtform, #stream_jwtform * {
+	box-sizing: border-box;
+}
+
 #stream_jwtform .header {
-  max-width: 640px;
+  z-index: 1;
   width: 100%;
   justify-content: center;
-  padding: 24px;
 }
-#stream_jwtform .header .inputs > * {
-  width: calc(50% - 32px);
+#stream_jwtform .header .inputs input:first-of-type {
+	margin-right: 7.5px;
+}
+#stream_jwtform .header .inputs input:last-of-type {
+	margin-left: 7.5px;
 }
 
 #stream_jwtform .header .inputs {
@@ -26,20 +32,25 @@
   justify-content: space-between;
 }
 
+#stream_jwtform .header .inputs > * { 
+	flex: 1
+}
+
 #stream_jwtform .container {
+	margin: 15px 0;
 	display: flex;
 	flex: 1;
-	max-width: 640px;
 	width: 100%;
 	justify-content: center;
 	align-items: center;
-	padding: 0px 24px !important;
+	padding: 0;
 }
 
 #stream_jwtform pre {
-	background-color: #f9f9f9;
+	background-color: transparent;
 	border: 1px solid #eeeeee;
-	border-radius: 8px;
+	border-bottom: transparent; 
+	box-shadow: 0 3px 0 0 #006CFF;
 	white-space: normal;
 	padding: 24px;
 	font-size: 24px;
@@ -47,11 +58,16 @@
 	letter-spacing: .5px;
 	line-height: 40px;
 	font-family: 'Roboto Mono', monospace;
+	margin: 0;
 }
 
 #stream_jwtform pre > span {
 	word-break: break-all;
 }
+
+#stream_jwtform pre > span:nth-of-type(1) {color: #F50057;}
+#stream_jwtform pre > span:nth-of-type(2) {color: #6200EA;}
+#stream_jwtform pre > span:nth-of-type(3) {color: #006CFF;}
 
 #stream_jwtform input  {
 	font-family: 'Roboto Mono', monospace;
@@ -60,9 +76,12 @@
 	font-size: 16px;
     padding: 16px;
 	border: 0;
-	background-color: #f9f9f9;
 	border: 1px solid #eeeeee;
-	border-radius: 8px;
+}
+#stream_jwtform input:focus {
+	background-color: #f9f9f9;
+	box-shadow: inset 0 -3px 0 0 #006CFF;
+
 }
 
 #stream_jwtform select {
@@ -94,10 +113,69 @@
 	letter-spacing: 1px;
 	font-family: monospace;
 }
-
-#stream_jwtform .header {
-	display: flex;
-	flex-direction: row;
-	justify-content: center;
-	align-items: center;
+#stream_jwtform .footer {
+	width: 100%;
 }
+#stream_jwtform .footer:before {
+	display:none;
+}
+#stream_jwtform .footer .expiration {
+	display: flex;
+	align-items: center;
+	width: 100%;
+}
+
+#stream_jwtform .footer .expiration input[type="checkbox"] {
+	visibility: hidden;
+	position: absolute;
+	left: -99999px;
+}
+#stream_jwtform .footer .expiration label{
+	position: relative;
+	padding: 16px 0;
+ }
+
+#stream_jwtform .footer .expiration > label:before {
+	position: relative;
+	top: 4px;
+	content: ' ';
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+	margin-right: 5px;
+	border: 1px solid #eeeeee;
+}
+
+#stream_jwtform .footer .expiration input[type="checkbox"]:checked + label {
+	&:before {
+		background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAAOCAYAAADJ7fe0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAEaADAAQAAAABAAAADgAAAABsI5NSAAABSUlEQVQoFZ2SPUsDQRCG39kzhViJv8KfIBY2Coo2go2NAUtzWRVSGEQQi4BYGHMiWKS1ELQVW+3EMoWFjZ2FQkgT8Gt8d70kHiRwl4HZnd2ZeXZ2doFhZV9HsKWTLl2GYmzrKL5wA8UMCVMmM+RccwRceQDwggBP2SCXGqCBCwIWePgrcphFVZrpIaqCO9QJWCHgHQZzOJZnd5P0EIsa4/PsQYsVzKMmDQdwkg4SaoUVhAS0mbPECh59djwYhDpNfUNR7X9H17Zapl0m4INHLiOS+64vNgydn9RxnlQlaC0RYLWAH1S4901dxYncJvzxwpD8QHuD6v5MnaBF77OaJyCirfSsM+7a7/cZep8t1D36D5jg7n3E1F3OAbWAUznjPFB6EBdS1Mg3sBMu2GEFh53loDn5OhPYZCV/jRP2IgWgP7ikY3ANzSC/H2VYJdu0wyAAAAAASUVORK5CYII=') center center no-repeat;
+		
+	}
+}
+
+#stream_jwtform .footer .expiration input[type="number"] {
+	position: relative;
+	z-index: 1;
+}
+
+
+#stream_jwtform .footer .expiration-input {
+	position: relative;
+}
+
+#stream_jwtform .footer .expiration-input label {
+	position: absolute;
+	top: 2px;
+	right: 40px;
+	font-size: 16px;
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif ;
+	font-weight: 600;
+	color: #ccc;
+	z-index: 1;
+}
+
+#stream_jwtform .footer .expiration-input input {
+	width: 100%;
+}
+
+#stream_jwtform .footer .expiration * { flex: 1;}
