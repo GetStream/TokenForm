@@ -33,7 +33,7 @@ export default (container) => {
 
 	// Generate JWT on each change of the secret, or the userID
 	useEffect(() => {
-		const stringifiedHeader = UTF8.parse(JSON.stringify(header));
+		const stringifiedHeader = UTF8.parse(JSON.stringify({ alg: "HS256", typ: "JWT" }));
 		const header = base64url(stringifiedHeader);
 
 		const stringifiedData = UTF8.parse(JSON.stringify({ user_id: userID }));
